@@ -6,14 +6,43 @@
 
 int main(int argc, char* argv[])
 {
+    SDL_Event event;
+    int quit = 0;
+    int fs = 1;
+
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
     {
         return 1;
     }
 
-    SDL_Window* window = SDL_CreateWindow("Lecture 2, Windowing!", 250, 250, 800, 600, SDL_WINDOW_SHOWN);
+    SDL_Window* window = SDL_CreateWindow("Alexander Hitchen, 26988001", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_RESIZABLE);
+    while (!quit) 
+    {
+        while (SDL_PollEvent(&event))
+        {
+            switch (event.type)
+            {
+            case SDL_KEYDOWN:
+                if (fs == 1) {
+                    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+                    fs = 0;
+                }
+                else 
+                {
+                    SDL_SetWindowFullscreen(window, 0);
+                    SDL_SetWindowSize(window, 800, 600);
+                    fs = 1;
+                }
+                break;
+            case SDL_QUIT:
+                quit = 1;
+                break;
+            default:
+                break;
+            }
 
-    SDL_Delay(4200);
+        }
+    }
 
     return 0;
 }
