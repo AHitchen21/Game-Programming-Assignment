@@ -2,10 +2,20 @@
 //
 
 #include <iostream>
+#include "SDL.h"
 
-int main()
+int main(int argc, char* argv[])
 {
-    std::cout << "Hello World!\n";
+    if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
+    {
+        return 1;
+    }
+
+    SDL_Window* window = SDL_CreateWindow("Lecture 2, Windowing!", 250, 250, 800, 600, SDL_WINDOW_SHOWN);
+
+    SDL_Delay(4200);
+
+    return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
