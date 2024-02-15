@@ -16,6 +16,28 @@ int main(int argc, char* argv[])
     }
 
     SDL_Window* window = SDL_CreateWindow("Alexander Hitchen, 26988001", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_RESIZABLE);
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_RenderClear(renderer);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+    int x = 310;
+    int y = 210;
+    for (int i = 0; i < 10; i++)
+    {
+        for (int j = 0; j < 10; j++) 
+        {
+            SDL_Rect r;
+            r.x = x;
+            r.y = y;
+            r.w = 20;
+            r.h = 20;
+            SDL_RenderDrawRect(renderer, &r);
+            x = x + 20;
+        }
+        y = y + 20;
+        x = 310;
+    }
+    SDL_RenderPresent(renderer);
     while (!quit) 
     {
         while (SDL_PollEvent(&event))
