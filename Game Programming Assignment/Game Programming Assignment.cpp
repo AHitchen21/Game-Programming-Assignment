@@ -6,6 +6,7 @@
 
 int main(int argc, char* argv[])
 {
+    srand(time(NULL));
     SDL_Event event;
     int quit = 0;
     int fs = 1;
@@ -17,7 +18,7 @@ int main(int argc, char* argv[])
 
     SDL_Window* window = SDL_CreateWindow("Alexander Hitchen, 26988001", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_RESIZABLE);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    /*SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderClear(renderer);
     SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
     int x = 310;
@@ -36,6 +37,22 @@ int main(int argc, char* argv[])
         }
         y = y + 20;
         x = 310;
+    }*/
+
+    for (int i = 0; i < 1000; i++)
+    {
+        int scaleX = rand() % 100;
+        int scaleY = rand() % 100;
+        int startX = rand() % 800;
+        int startY = rand() % 600;
+        int endX = rand() % 800;
+        int endY = rand() % 600;
+        int colorR = rand() % 255;
+        int colorG = rand() % 255;
+        int colorB = rand() % 255;
+        SDL_SetRenderDrawColor(renderer, colorR, colorG, colorB, 255);
+        SDL_RenderDrawLine(renderer, startX, startY, endX, endY);
+
     }
     SDL_RenderPresent(renderer);
     while (!quit) 
