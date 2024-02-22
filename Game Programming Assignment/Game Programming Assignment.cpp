@@ -6,34 +6,86 @@
 
 int main(int argc, char* argv[])
 {
-    SDL_Event event;
-    int quit = 0;
-    int fs = 1;
+
 
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
     {
         return 1;
     }
 
+    srand(time(NULL));
+    SDL_Event event;
+    int quit = 0;
+    int fs = 1;
+
     SDL_Window* window = SDL_CreateWindow("Alexander Hitchen, 26988001", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_RESIZABLE);
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_RenderClear(renderer);
+    /*SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+    int x = 310;
+    int y = 210;
+    for (int i = 0; i < 10; i++)
+    {
+        for (int j = 0; j < 10; j++) 
+        {
+            SDL_Rect r;
+            r.x = x;
+            r.y = y;
+            r.w = 20;
+            r.h = 20;
+            SDL_RenderDrawRect(renderer, &r);
+            x = x + 20;
+        }
+        y = y + 20;
+        x = 310;
+    }*/
+
+    /*for (int i = 0; i < 1000; i++)
+    {
+        int scaleX = rand() % 100;
+        int scaleY = rand() % 100;
+        int startX = rand() % 800;
+        int startY = rand() % 600;
+        int endX = rand() % 800;
+        int endY = rand() % 600;
+        int colorR = rand() % 255;
+        int colorG = rand() % 255;
+        int colorB = rand() % 255;
+        SDL_SetRenderDrawColor(renderer, colorR, colorG, colorB, 255);
+        SDL_RenderDrawLine(renderer, startX, startY, endX, endY);
+
+    }*/
+    int x = 375;
+    int y = 275;
+    int colorG = 238;
+
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            SDL_Rect r;
+            r.x = x;
+            r.y = y;
+            r.w = 10;
+            r.h = 10;
+            SDL_SetRenderDrawColor(renderer, 109, colorG, 247, 255);
+            SDL_RenderFillRect(renderer, &r);
+            colorG = colorG - 20;
+            x = x + 12;
+        }
+        x = 375;
+        y = y + 12;
+        colorG = colorG + 80;
+    }
+    
+    SDL_RenderPresent(renderer);
     while (!quit) 
     {
         while (SDL_PollEvent(&event))
         {
             switch (event.type)
             {
-            case SDL_KEYDOWN:
-                if (fs == 1) {
-                    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
-                    fs = 0;
-                }
-                else 
-                {
-                    SDL_SetWindowFullscreen(window, 0);
-                    SDL_SetWindowSize(window, 800, 600);
-                    fs = 1;
-                }
-                break;
             case SDL_QUIT:
                 quit = 1;
                 break;
