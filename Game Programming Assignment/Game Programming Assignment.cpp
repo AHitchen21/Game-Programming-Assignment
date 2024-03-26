@@ -2,29 +2,39 @@
 //
 
 #include <iostream>
+#include <ctime>
+#include <vector>
 #include "SDL.h"
 #include "Timer.h"
+#include "AH_Square.h"
 
+bool getTime(char* buffer, int  buffersize)
+{
+    time_t currentTime = std::time(0);
+    struct tm info;
+    localtime_s(&info, &currentTime);
+    size_t written = strftime(buffer, buffersize, "%d/%m/%y %T", &info);
+    return written != 0;
+}
 int main(int argc, char* argv[])
 {
-
+    srand(std::time(NULL));
+    
 
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
     {
         return 1;
     }
 
+    AH_Square square1;
     Timer time;
     SDL_Event event;
     const int DELTA_TIME = 16.66666;
-    int quit = 0;
+    bool quit = false;
     bool left = true;
+    bool move = true;
 
-    SDL_Rect r1;
-    r1.x = 200;
-    r1.y = 300;
-    r1.w = 20;
-    r1.h = 20;
+    square1.Init(30, 30, 50, 50);
 
     SDL_Window* window = SDL_CreateWindow("Alexander Hitchen, 26988001", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_RESIZABLE);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -33,41 +43,63 @@ int main(int argc, char* argv[])
     //SDL_RenderPresent(renderer);
     while (!quit) 
     {
+        //input
         time.resetTicksTimer();
         while (SDL_PollEvent(&event))
         {
-            switch (event.type)
+            SDL_Keycode keyPressed = event.key.keysym.sym;
+            char timestr[32];
+            getTime(timestr, 32);
+            if (event.type == SDL_KEYDOWN && event.key.repeat == NULL)
             {
-            case SDL_QUIT:
-                quit = 1;
-                break;
-            default:
-                break;
+                SDL_Log("[%s] [KEYDOWN] time %d; code %d; char %s;", timestr, event.key.timestamp, keyPressed, SDL_GetKeyName(keyPressed));
+                switch (event.key.keysym.sym)
+                {
+                case SDLK_w:
+                    square1.Input(SDLK_w);
+                    break;
+                case SDLK_a:
+                    square1.Input(SDLK_a);
+                    break;
+                case SDLK_s:
+                    square1.Input(SDLK_s);
+                    break;
+                case SDLK_d:
+                    square1.Input(SDLK_d);
+                    break;
+                }
+            }
+            if (event.type == SDL_KEYUP && event.key.repeat == NULL)
+            {
+                SDL_Log("[%s] [KEYUP] time %d; code %d; char %s;", timestr, event.key.timestamp, keyPressed, SDL_GetKeyName(keyPressed));
+                switch (event.key.keysym.sym)
+                {
+                case SDLK_w:
+                    square1.Input(SDLK_w);
+                    break;
+                case SDLK_a:
+                    square1.Input(SDLK_a);
+                    break;
+                case SDLK_s:
+                    square1.Input(SDLK_s);
+                    break;
+                case SDLK_d:
+                    square1.Input(SDLK_d);
+                    break;
+                }
+            }
+            if (event.type == SDL_QUIT)
+            {
+                quit = true;
+                SDL_Quit;
             }
         }
+        
         //update
-        if (r1.x < 0)
-        {
-            left = false;
-        }
-        else if (r1.x > 790)
-        {
-            left = true;
-        }
-        if (left)
-        {
-            r1.x--;
-        }
-        else
-        {
-            r1.x++;
-        }
+        square1.Update();
         //Render
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        SDL_RenderClear(renderer);
-        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-        SDL_RenderDrawRect(renderer, &r1);
-        SDL_RenderPresent(renderer);
+        square1.Render(renderer);
+
         if (time.getTicks() < DELTA_TIME)
         {
             SDL_Delay(DELTA_TIME - time.getTicks());
@@ -76,16 +108,3 @@ int main(int argc, char* argv[])
 
     return 0;
 }
-
-
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
