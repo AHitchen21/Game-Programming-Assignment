@@ -2,6 +2,7 @@
 #define ASquare
 
 #include "SDL.h"
+#include "Vector.h"
 #include <iostream>
 #include <ctime>
 
@@ -22,6 +23,7 @@ public:
 
 private:
 	SDL_Event event;
+	Vector velocity;
 };
 #endif
 

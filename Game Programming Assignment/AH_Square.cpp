@@ -24,6 +24,8 @@ void AH_Square::Init(int px, int py, int pw, int ph)
 	G = 0;
 	B = 0;
 
+    velocity.X = 0;
+    velocity.Y = 0;
 }
 
 void AH_Square::Input(int whichKey)
@@ -35,38 +37,28 @@ void AH_Square::Update()
 {
     char timestring[32];
     getTime(timestring, 32);
-    if (rect.y > 0) 
+    if (gKeys[SDLK_w])
     {
-        if (gKeys[SDLK_w])
-        {
-            rect.y--;
-            SDL_Log("[%s] [POS] square position: (%i,%i)", timestring, rect.x, rect.y);
-        }
+        velocity.Y = velocity.Y - 1;
+        SDL_Log("[%s] [POS] square position: (%i,%i)", timestring, rect.x, rect.y);
     }
-    if (rect.y < (600 - rect.h)) 
+    if (gKeys[SDLK_s])
     {
-        if (gKeys[SDLK_s])
-        {
-            rect.y++;
-            SDL_Log("[%s] [POS] square position: (%i,%i)", timestring, rect.x, rect.y);
-        }
+        velocity.Y = velocity.Y + 1;
+        SDL_Log("[%s] [POS] square position: (%i,%i)", timestring, rect.x, rect.y);
     }
-    if (rect.x > 0) 
+    if (gKeys[SDLK_a])
     {
-        if (gKeys[SDLK_a])
-        {
-            rect.x--;
-            SDL_Log("[%s] [POS] square position: (%i,%i)", timestring, rect.x, rect.y);
-        }
+        velocity.X = velocity.X - 1;
+        SDL_Log("[%s] [POS] square position: (%i,%i)", timestring, rect.x, rect.y);
     }
-    if (rect.x < (800 - rect.w)) 
+    if (gKeys[SDLK_d])
     {
-        if (gKeys[SDLK_d])
-        {
-            rect.x++;
-            SDL_Log("[%s] [POS] square position: (%i,%i)", timestring, rect.x, rect.y);
-        }
+        velocity.X = velocity.X + 1;
+        SDL_Log("[%s] [POS] square position: (%i,%i)", timestring, rect.x, rect.y);
     }
+    rect.x = rect.x + velocity.X;
+    rect.y = rect.y + velocity.Y;
     
 }
 
