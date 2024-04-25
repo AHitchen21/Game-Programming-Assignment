@@ -6,6 +6,8 @@
 #include <iostream>
 #include <ctime>
 
+class Gameworld;
+
 class AH_Square
 {
 public:
@@ -21,9 +23,12 @@ public:
 
 	bool getTime(char* buffer, int buffersize);
 
+	Gameworld* parent;
+
 private:
 	SDL_Event event;
 	Vector velocity;
+	int speed;
 };
 #endif
 

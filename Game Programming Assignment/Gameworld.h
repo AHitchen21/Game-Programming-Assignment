@@ -13,6 +13,11 @@ class Gameworld
 public:
     bool getTime(char* buffer, int  buffersize);
     void startWorld();
+    std::vector<int> getWindowSize();
+private:
+    SDL_Window* window;
+    SDL_Renderer* renderer;
+    int W, H;
 };
 
 #endif

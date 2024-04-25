@@ -1,5 +1,7 @@
 #include "AH_Square.h"
+#include "Gameworld.h"
 #include "SDL.h"
+#include <vector>
 
 #define MAX_KEYS (256)
 bool gKeys[MAX_KEYS];
@@ -7,11 +9,13 @@ bool gKeys[MAX_KEYS];
 AH_Square::AH_Square()
 {
 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Square constructed with Param(%p)", this);
+    speed = 7;
 }
 
 AH_Square::~AH_Square()
 {
 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Square destroyed with Param(%p)", this);
+    delete parent;
 }
 
 void AH_Square::Init(int px, int py, int pw, int ph)
@@ -36,29 +40,76 @@ void AH_Square::Input(int whichKey)
 void AH_Square::Update()
 {
     char timestring[32];
-    getTime(timestring, 32);
+    parent->getTime(timestring, 32);
     if (gKeys[SDLK_w])
     {
-        velocity.Y = velocity.Y - 1;
-        SDL_Log("[%s] [POS] square position: (%i,%i)", timestring, rect.x, rect.y);
+        if (rect.y < 0)
+        {
+            velocity.Y = 0;
+        }
+        else if (velocity.Y > -speed) 
+        {
+            velocity.Y = velocity.Y - 2;
+            SDL_Log("[%s] [POS] square position: (%i,%i)", timestring, rect.x, rect.y);
+        }
     }
     if (gKeys[SDLK_s])
     {
-        velocity.Y = velocity.Y + 1;
-        SDL_Log("[%s] [POS] square position: (%i,%i)", timestring, rect.x, rect.y);
+        if (rect.y > 600 - rect.h)
+        {
+            velocity.Y = 0;
+        }
+        else if (velocity.Y < speed) 
+        {
+            velocity.Y = velocity.Y + 2;
+            SDL_Log("[%s] [POS] square position: (%i,%i)", timestring, rect.x, rect.y);
+        }
     }
     if (gKeys[SDLK_a])
     {
-        velocity.X = velocity.X - 1;
-        SDL_Log("[%s] [POS] square position: (%i,%i)", timestring, rect.x, rect.y);
+        if (rect.x < 0)
+        {
+            velocity.X = 0;
+        }
+        else if (velocity.X > -speed) 
+        {
+            velocity.X = velocity.X - 2;
+            SDL_Log("[%s] [POS] square position: (%i,%i)", timestring, rect.x, rect.y);
+        }
     }
     if (gKeys[SDLK_d])
     {
-        velocity.X = velocity.X + 1;
-        SDL_Log("[%s] [POS] square position: (%i,%i)", timestring, rect.x, rect.y);
+        if (rect.x > 800 - rect.w)
+        {
+            velocity.X = 0;
+        }
+        else if (velocity.X < speed) 
+        {
+            velocity.X = velocity.X + 2;
+            SDL_Log("[%s] [POS] square position: (%i,%i)", timestring, rect.x, rect.y);
+        }
     }
     rect.x = rect.x + velocity.X;
     rect.y = rect.y + velocity.Y;
+    if (velocity.X > 0) 
+    {
+        velocity.X = velocity.X - 1;
+    }
+    if (velocity.X < 0)
+    {
+        velocity.X = velocity.X + 1;
+    }
+    if (velocity.Y > 0) 
+    {
+        velocity.Y = velocity.Y - 1;
+    }
+    if (velocity.Y < 0)
+    {
+        velocity.Y = velocity.Y + 1;
+    }
+
+
+
     
 }
 
@@ -68,7 +119,6 @@ void AH_Square::Render(SDL_Renderer* renderer)
     SDL_RenderClear(renderer);
     SDL_SetRenderDrawColor(renderer, R, G, B, 255);
     SDL_RenderDrawRect(renderer, &rect);
-    SDL_RenderPresent(renderer);
 }
 
 bool AH_Square::getTime(char * buffer, int buffersize)

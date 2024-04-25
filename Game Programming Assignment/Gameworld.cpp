@@ -1,4 +1,5 @@
 #include "Gameworld.h"
+
 bool Gameworld::getTime(char* buffer, int  buffersize)
     {
         time_t currentTime = std::time(0);
@@ -18,15 +19,17 @@ void Gameworld::startWorld()
     bool left = true;
     bool move = true;
 
+    window = SDL_CreateWindow("Alexander Hitchen, 26988001", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_RESIZABLE);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
     square1.Init(30, 30, 50, 50);
 
-    SDL_Window* window = SDL_CreateWindow("Alexander Hitchen, 26988001", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_RESIZABLE);
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    //SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    //SDL_RenderClear(renderer);
-    //SDL_RenderPresent(renderer);
+
+ 
     while (!quit)
     {
+        //std::cout << W + " " + H << std::endl;
+        /*SDL_GetWindowSize(window, &W, &H);*/
         //input
         time.resetTicksTimer();
         while (SDL_PollEvent(&event))
@@ -83,6 +86,7 @@ void Gameworld::startWorld()
         square1.Update();
         //Render
         square1.Render(renderer);
+        SDL_RenderPresent(renderer);
 
         if (time.getTicks() < DELTA_TIME)
         {
@@ -90,3 +94,12 @@ void Gameworld::startWorld()
         }
     }
  }
+
+//std::vector<int> Gameworld::getWindowSize()
+//{
+//    std::vector<int> dimensions;
+//    dimensions.push_back(W);
+//    dimensions.push_back(H);
+//    return dimensions;
+//}
+
