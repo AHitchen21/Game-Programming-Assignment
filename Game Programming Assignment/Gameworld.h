@@ -14,10 +14,12 @@ public:
     bool getTime(char* buffer, int  buffersize);
     void startWorld();
     std::vector<int> getWindowSize();
-private:
+    int W = 800;
+    int H = 600;
     SDL_Window* window;
     SDL_Renderer* renderer;
-    int W, H;
+private:
+    
 };
 
 #endif

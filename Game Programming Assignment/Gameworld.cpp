@@ -12,6 +12,7 @@ bool Gameworld::getTime(char* buffer, int  buffersize)
 void Gameworld::startWorld()
 {
     AH_Square square1;
+    square1.parent = this;
     Timer time;
     SDL_Event event;
     const int DELTA_TIME = 16.66666;
@@ -28,8 +29,6 @@ void Gameworld::startWorld()
  
     while (!quit)
     {
-        //std::cout << W + " " + H << std::endl;
-        /*SDL_GetWindowSize(window, &W, &H);*/
         //input
         time.resetTicksTimer();
         while (SDL_PollEvent(&event))

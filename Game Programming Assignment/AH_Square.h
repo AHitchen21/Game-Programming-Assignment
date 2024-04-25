@@ -19,7 +19,7 @@ public:
 	void Input(int whichKey);
 	void Render(SDL_Renderer* renderer);
 	SDL_Rect rect;
-	int R, G, B;
+	int R, G, B, w, h;
 
 	bool getTime(char* buffer, int buffersize);
 

@@ -10,6 +10,7 @@ AH_Square::AH_Square()
 {
 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Square constructed with Param(%p)", this);
     speed = 7;
+    
 }
 
 AH_Square::~AH_Square()
@@ -39,8 +40,11 @@ void AH_Square::Input(int whichKey)
 
 void AH_Square::Update()
 {
+    int w, h;
     char timestring[32];
     parent->getTime(timestring, 32);
+    SDL_GetWindowSize(parent->window, &w, &h);
+    SDL_Log("[%s] [WS] Window Size: (%i,%i)", timestring, w, h);
     if (gKeys[SDLK_w])
     {
         if (rect.y < 0)
@@ -55,7 +59,7 @@ void AH_Square::Update()
     }
     if (gKeys[SDLK_s])
     {
-        if (rect.y > 600 - rect.h)
+        if (rect.y > h - rect.h)
         {
             velocity.Y = 0;
         }
@@ -79,7 +83,7 @@ void AH_Square::Update()
     }
     if (gKeys[SDLK_d])
     {
-        if (rect.x > 800 - rect.w)
+        if (rect.x > w - rect.w)
         {
             velocity.X = 0;
         }
