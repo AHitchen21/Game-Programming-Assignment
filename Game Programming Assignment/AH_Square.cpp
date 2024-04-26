@@ -1,4 +1,5 @@
 #include "AH_Square.h"
+#include "BulletContainer.h"
 #include "Gameworld.h"
 #include "SDL.h"
 #include <vector>
@@ -10,13 +11,11 @@ AH_Square::AH_Square()
 {
 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Square constructed with Param(%p)", this);
     speed = 7;
-    
 }
 
 AH_Square::~AH_Square()
 {
 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Square destroyed with Param(%p)", this);
-    delete parent;
 }
 
 void AH_Square::Init(int px, int py, int pw, int ph)
@@ -31,6 +30,7 @@ void AH_Square::Init(int px, int py, int pw, int ph)
 
     velocity.X = 0;
     velocity.Y = 0;
+
 }
 
 void AH_Square::Input(int whichKey)
@@ -40,11 +40,9 @@ void AH_Square::Input(int whichKey)
 
 void AH_Square::Update()
 {
-    int w, h;
     char timestring[32];
     parent->getTime(timestring, 32);
     SDL_GetWindowSize(parent->window, &w, &h);
-    SDL_Log("[%s] [WS] Window Size: (%i,%i)", timestring, w, h);
     if (gKeys[SDLK_w])
     {
         if (rect.y < 0)
@@ -125,11 +123,3 @@ void AH_Square::Render(SDL_Renderer* renderer)
     SDL_RenderDrawRect(renderer, &rect);
 }
 
-bool AH_Square::getTime(char * buffer, int buffersize)
-{
-    time_t currentTime = std::time(0);
-    struct tm info;
-    localtime_s(&info, &currentTime);
-    size_t written = strftime(buffer, buffersize, "%d/%m/%y %T", &info);
-    return written != 0;
-}

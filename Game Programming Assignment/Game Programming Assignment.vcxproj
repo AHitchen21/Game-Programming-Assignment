@@ -128,6 +128,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AH_Square.cpp" />
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletContainer.cpp" />
     <ClCompile Include="Game Programming Assignment.cpp" />
     <ClCompile Include="Gameworld.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -138,6 +140,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AH_Square.h" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletContainer.h" />
     <ClInclude Include="Gameworld.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Vector.h" />

@@ -4,7 +4,6 @@
 #include "SDL.h"
 #include "Vector.h"
 #include <iostream>
-#include <ctime>
 
 class Gameworld;
 
@@ -20,8 +19,6 @@ public:
 	void Render(SDL_Renderer* renderer);
 	SDL_Rect rect;
 	int R, G, B, w, h;
-
-	bool getTime(char* buffer, int buffersize);
 
 	Gameworld* parent;
 

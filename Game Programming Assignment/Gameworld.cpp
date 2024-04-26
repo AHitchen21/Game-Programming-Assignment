@@ -1,4 +1,5 @@
 #include "Gameworld.h"
+#include "BulletContainer.h"
 
 bool Gameworld::getTime(char* buffer, int  buffersize)
     {
@@ -13,6 +14,8 @@ void Gameworld::startWorld()
 {
     AH_Square square1;
     square1.parent = this;
+    BulletContainer bulletContainer;
+    bulletContainer.parent = &square1;
     Timer time;
     SDL_Event event;
     const int DELTA_TIME = 16.66666;
@@ -24,6 +27,7 @@ void Gameworld::startWorld()
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     square1.Init(30, 30, 50, 50);
+    bulletContainer.Init(4);
 
 
  
@@ -53,7 +57,10 @@ void Gameworld::startWorld()
                 case SDLK_d:
                     square1.Input(SDLK_d);
                     break;
+                case SDLK_SPACE:
+                    bulletContainer.Input();
                 }
+                
             }
             if (event.type == SDL_KEYUP && event.key.repeat == NULL)
             {
@@ -83,8 +90,10 @@ void Gameworld::startWorld()
 
         //update
         square1.Update();
+        bulletContainer.Update();
         //Render
         square1.Render(renderer);
+        bulletContainer.Render(renderer);
         SDL_RenderPresent(renderer);
 
         if (time.getTicks() < DELTA_TIME)
@@ -93,12 +102,4 @@ void Gameworld::startWorld()
         }
     }
  }
-
-//std::vector<int> Gameworld::getWindowSize()
-//{
-//    std::vector<int> dimensions;
-//    dimensions.push_back(W);
-//    dimensions.push_back(H);
-//    return dimensions;
-//}
 
