@@ -130,6 +130,8 @@
     <ClCompile Include="AH_Square.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletContainer.cpp" />
+    <ClCompile Include="Enemies.cpp" />
+    <ClCompile Include="EnemiesContainer.cpp" />
     <ClCompile Include="Game Programming Assignment.cpp" />
     <ClCompile Include="Gameworld.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -142,6 +144,8 @@
     <ClInclude Include="AH_Square.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletContainer.h" />
+    <ClInclude Include="Enemies.h" />
+    <ClInclude Include="EnemiesContainer.h" />
     <ClInclude Include="Gameworld.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Vector.h" />

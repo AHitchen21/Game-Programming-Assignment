@@ -12,16 +12,15 @@
 
 int main(int argc, char* argv[])
 {
-
-    Gameworld gw;
-
-    srand(std::time(NULL));
-    
-
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
     {
         return 1;
     }
+
+    Gameworld gw;
+
+    srand(std::time(NULL));
+
 
     gw.startWorld();
 

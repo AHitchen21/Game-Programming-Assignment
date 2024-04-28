@@ -1,5 +1,6 @@
 #include "Gameworld.h"
 #include "BulletContainer.h"
+#include "Enemies.h"
 
 bool Gameworld::getTime(char* buffer, int  buffersize)
     {
@@ -59,6 +60,7 @@ void Gameworld::startWorld()
                     break;
                 case SDLK_SPACE:
                     bulletContainer.Input();
+                    break;
                 }
                 
             }

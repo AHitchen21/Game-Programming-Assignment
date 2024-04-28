@@ -19,8 +19,7 @@ public:
 	void Update();
 
 	std::vector<Bullet*> bulletList;
-	int X, Y, Num;
-	float dirX, dirY;
+	int Num;
 
 	AH_Square* parent;
 };

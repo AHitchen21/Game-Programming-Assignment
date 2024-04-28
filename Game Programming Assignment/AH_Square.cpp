@@ -109,10 +109,6 @@ void AH_Square::Update()
     {
         velocity.Y = velocity.Y + 1;
     }
-
-
-
-    
 }
 
 void AH_Square::Render(SDL_Renderer* renderer)
