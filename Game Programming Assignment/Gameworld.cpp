@@ -1,22 +1,23 @@
 #include "Gameworld.h"
-#include "BulletContainer.h"
+#include "EnemiesContainer.h"
 #include "Enemies.h"
 
 bool Gameworld::getTime(char* buffer, int  buffersize)
-    {
-        time_t currentTime = std::time(0);
-        struct tm info;
-        localtime_s(&info, &currentTime);
-        size_t written = strftime(buffer, buffersize, "%d/%m/%y %T", &info);
-        return written != 0;
-    }
+{
+    time_t currentTime = std::time(0);
+    struct tm info;
+    localtime_s(&info, &currentTime);
+    size_t written = strftime(buffer, buffersize, "%d/%m/%y %T", &info);
+    return written != 0;
+}
 
 void Gameworld::startWorld()
 {
     AH_Square square1;
     square1.parent = this;
-    BulletContainer bulletContainer;
     bulletContainer.parent = &square1;
+    EnemiesContainer enemyContainer;
+    enemyContainer.parent = this;
     Timer time;
     SDL_Event event;
     const int DELTA_TIME = 16.66666;
@@ -29,6 +30,7 @@ void Gameworld::startWorld()
 
     square1.Init(30, 30, 50, 50);
     bulletContainer.Init(4);
+    enemyContainer.Init();
 
 
  
@@ -93,9 +95,11 @@ void Gameworld::startWorld()
         //update
         square1.Update();
         bulletContainer.Update();
+        enemyContainer.Update();
         //Render
         square1.Render(renderer);
         bulletContainer.Render(renderer);
+        enemyContainer.Render(renderer);
         SDL_RenderPresent(renderer);
 
         if (time.getTicks() < DELTA_TIME)

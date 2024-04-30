@@ -1,4 +1,4 @@
-#ifndef BullerContainerFILE
+#ifndef BulletContainerFILE
 #define BulletContainerFILE
 
 #include"SDL.h"
