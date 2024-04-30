@@ -27,5 +27,6 @@ private:
 	SDL_Event event;
 	Vector velocity;
 	int speed;
+	bool moveUp;
 };
 #endif

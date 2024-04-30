@@ -15,7 +15,7 @@ Enemies::~Enemies()
 void Enemies::Init(int pX, int pY)
 {
 	rect.x = pX + 50;
-	rect.y = pY / 2;
+	rect.y = pY;
 	rect.w = 50;
 	rect.h = 50;
 
@@ -23,12 +23,31 @@ void Enemies::Init(int pX, int pY)
 	G = 0;
 	B = 255;
 
-	velocity.X = -10;
-	velocity.Y = 0;
+	int random = rand() % 2;
+
+	if (random == 1)
+	{
+		velocity.Y = 6;
+	}
+	else 
+	{
+		velocity.Y = -6;
+	}
+
+	velocity.X = -4;
+	
 }
 
 void Enemies::Update(int screenX, int screenY)
 {
+	if (rect.y > screenY - 70 && velocity.Y > -10)
+	{
+		velocity.Y = velocity.Y - 1;
+	}
+	if (rect.y < 10 && velocity.Y < 10)
+	{
+		velocity.Y = velocity.Y + 1;
+	}
 	rect.x = rect.x + velocity.X;
 	rect.y = rect.y + velocity.Y;
 }
@@ -72,6 +91,7 @@ bool Enemies::collidedWithBullet(Bullet* aBullet)
 	}
 	else
 	{
+		aBullet->hit = true;
 		return true;
 	}
 }

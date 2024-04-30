@@ -20,7 +20,10 @@ void EnemiesContainer::Add()
 	Enemies* anEnemy = new Enemies();
 	anEnemy->parent = this;
 	bulletCont = &(parent->bulletContainer);
-	anEnemy->Init(w, h);
+	int offset = h - 70;
+	int randomY = 70 + (rand() % offset);
+	printf("randomY: %i", randomY);
+	anEnemy->Init(w, randomY);
 	this->enemyList.push_back(anEnemy);
 }
 

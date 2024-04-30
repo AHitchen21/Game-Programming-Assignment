@@ -29,7 +29,7 @@ void Gameworld::startWorld()
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     square1.Init(30, 30, 50, 50);
-    bulletContainer.Init(4);
+    bulletContainer.Init(6);
     enemyContainer.Init();
 
 

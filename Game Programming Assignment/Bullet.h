@@ -21,6 +21,7 @@ public:
 
 	bool shot;
 	bool input;
+	bool hit;
 
 	BulletContainer* parent;
 

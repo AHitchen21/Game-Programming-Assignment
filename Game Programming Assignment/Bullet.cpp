@@ -25,6 +25,7 @@ void Bullet::Init(int eX, int eY)
 
 	shot = false;
 	input = false;
+	hit = false;
 }
 
 void Bullet::Input()
@@ -40,10 +41,11 @@ void Bullet::Update(int posX, int posY, int screenX, int screenY)
 	}
 	if (shot == true) 
 	{
-		if (bulletRect.x > screenX ||  bulletRect.x < 0 || bulletRect.y > screenY || bulletRect.y < 0) 
+		if (bulletRect.x > screenX ||  bulletRect.x < 0 || bulletRect.y > screenY || bulletRect.y < 0|| hit == true) 
 		{
 			shot = false;
 			input = false;
+			hit = false;
 		}
 		else 
 		{

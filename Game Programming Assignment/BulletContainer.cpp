@@ -29,7 +29,7 @@ void BulletContainer::Add()
 {
 	Bullet* aBullet = new Bullet();
 	aBullet->parent = this;
-	aBullet->Init(parent->rect.x, parent->rect.y);
+	aBullet->Init(parent->rect.x, parent->rect.y - 25);
 	this->bulletList.push_back(aBullet);
 }
 
