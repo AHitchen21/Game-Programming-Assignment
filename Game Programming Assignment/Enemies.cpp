@@ -18,6 +18,10 @@ void Enemies::Init(int pX, int pY)
 	rect.y = pY;
 	rect.w = 50;
 	rect.h = 50;
+	
+	w = 0;
+	h = 0;
+
 
 	R = 0;
 	G = 0;
@@ -42,6 +46,7 @@ void Enemies::Init(int pX, int pY)
 
 void Enemies::Update(int screenX, int screenY)
 {
+
 	if (rect.y > screenY - 70 && velocity.Y > -ySpeed)
 	{
 		velocity.Y = velocity.Y - 1;

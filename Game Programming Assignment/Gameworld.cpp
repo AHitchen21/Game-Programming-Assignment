@@ -43,10 +43,6 @@ void Gameworld::startWorld()
     {
         //input
         time.resetTicksTimer();
-        if (SECont.bulletContainer != nullptr)
-        {
-            SECont.bulletContainer->Init(2);
-        }
         while (SDL_PollEvent(&event))
         {
             SDL_Keycode keyPressed = event.key.keysym.sym;

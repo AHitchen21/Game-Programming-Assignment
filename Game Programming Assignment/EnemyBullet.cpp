@@ -30,7 +30,7 @@ void EnemyBullet::Init(int eX, int eY)
 void EnemyBullet::Update(int posX, int posY, int screenX, int screenY)
 {
 	frames++;
-	if (frames == 120)
+	if (frames == 30)
 	{
 		shot = true;
 		frames = 0;
@@ -58,7 +58,7 @@ void EnemyBullet::Render(SDL_Renderer* aRenderer)
 {
 	if (shot == true)
 	{
-		SDL_SetRenderDrawColor(aRenderer, 255, 255, 0, 0);
+		SDL_SetRenderDrawColor(aRenderer, 0, 255, 0, 0);
 		SDL_RenderDrawRect(aRenderer, &bulletRect);
 	}
 }

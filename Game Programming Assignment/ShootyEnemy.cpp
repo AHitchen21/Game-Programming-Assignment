@@ -1,4 +1,5 @@
 #include "ShootyEnemy.h"
+#include "EnemiesContainer.h"
 
 ShootyEnemy::ShootyEnemy() : Enemies()
 {
@@ -13,6 +14,8 @@ ShootyEnemy::~ShootyEnemy()
 
 void ShootyEnemy::Update(int screenX, int screenY)
 {
+	w = parent->w;
+	h = parent->h;
 	velocity.X = -4;
 	velocity.Y = 0;
 	rect.x = rect.x + velocity.X;
