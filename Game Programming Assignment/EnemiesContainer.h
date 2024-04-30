@@ -12,11 +12,11 @@ class EnemiesContainer
 {
 public:
 	EnemiesContainer();
-	~EnemiesContainer();
+	virtual ~EnemiesContainer();
 	void Init();
-	void Add();
+	virtual void Add();
 	void Render(SDL_Renderer* aRenderer);
-	void Update();
+	virtual void Update();
 
 	std::vector<Enemies*> enemyList;
 	int Num, w, h, frames;

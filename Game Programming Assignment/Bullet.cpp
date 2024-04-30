@@ -1,8 +1,6 @@
 #include "Bullet.h"
 #include "BulletContainer.h"
 
-
-
 Bullet::Bullet()
 {
 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Bullet constructed with Param(%p)", this);
@@ -20,7 +18,7 @@ void Bullet::Init(int eX, int eY)
 	bulletRect.w = 30;
 	bulletRect.h = 10;
 
-	velocity.X = 5;
+	velocity.X = 10;
 	velocity.Y = 0;
 
 	shot = false;
@@ -30,7 +28,11 @@ void Bullet::Init(int eX, int eY)
 
 void Bullet::Input()
 {
-	input = true;
+	if (shot == false) 
+	{
+		input = true;
+		
+	}
 }
 
 void Bullet::Update(int posX, int posY, int screenX, int screenY)
@@ -55,7 +57,7 @@ void Bullet::Update(int posX, int posY, int screenX, int screenY)
 	else 
 	{
 		bulletRect.x = posX;
-		bulletRect.y = posY;
+		bulletRect.y = posY + 15;
 	}
 }
 

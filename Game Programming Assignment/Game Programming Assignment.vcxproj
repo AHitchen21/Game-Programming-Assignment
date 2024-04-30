@@ -130,10 +130,14 @@
     <ClCompile Include="AH_Square.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletContainer.cpp" />
+    <ClCompile Include="EBulletContainer.cpp" />
     <ClCompile Include="Enemies.cpp" />
     <ClCompile Include="EnemiesContainer.cpp" />
+    <ClCompile Include="EnemyBullet.cpp" />
     <ClCompile Include="Game Programming Assignment.cpp" />
     <ClCompile Include="Gameworld.cpp" />
+    <ClCompile Include="ShootyEnemy.cpp" />
+    <ClCompile Include="ShootyEnemyContainer.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Vector.cpp" />
   </ItemGroup>
@@ -144,9 +148,13 @@
     <ClInclude Include="AH_Square.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletContainer.h" />
+    <ClInclude Include="EBulletContainer.h" />
     <ClInclude Include="Enemies.h" />
     <ClInclude Include="EnemiesContainer.h" />
+    <ClInclude Include="EnemyBullet.h" />
     <ClInclude Include="Gameworld.h" />
+    <ClInclude Include="ShootyEnemy.h" />
+    <ClInclude Include="ShootyEnemyContainer.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>

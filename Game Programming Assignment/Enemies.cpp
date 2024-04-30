@@ -24,27 +24,29 @@ void Enemies::Init(int pX, int pY)
 	B = 255;
 
 	int random = rand() % 2;
+	int randomSpeed = 2 + rand() % 8;
+	ySpeed = 5 + rand() % 10;
 
 	if (random == 1)
 	{
-		velocity.Y = 6;
+		velocity.Y = ySpeed;
 	}
 	else 
 	{
-		velocity.Y = -6;
+		velocity.Y = -ySpeed;
 	}
 
-	velocity.X = -4;
+	velocity.X = -randomSpeed;
 	
 }
 
 void Enemies::Update(int screenX, int screenY)
 {
-	if (rect.y > screenY - 70 && velocity.Y > -10)
+	if (rect.y > screenY - 70 && velocity.Y > -ySpeed)
 	{
 		velocity.Y = velocity.Y - 1;
 	}
-	if (rect.y < 10 && velocity.Y < 10)
+	if (rect.y < 10 && velocity.Y < ySpeed)
 	{
 		velocity.Y = velocity.Y + 1;
 	}

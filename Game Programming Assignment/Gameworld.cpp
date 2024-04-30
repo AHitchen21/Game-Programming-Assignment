@@ -1,6 +1,8 @@
 #include "Gameworld.h"
 #include "EnemiesContainer.h"
 #include "Enemies.h"
+#include "ShootyEnemyContainer.h"
+#include "EBulletContainer.h"
 
 bool Gameworld::getTime(char* buffer, int  buffersize)
 {
@@ -18,6 +20,8 @@ void Gameworld::startWorld()
     bulletContainer.parent = &square1;
     EnemiesContainer enemyContainer;
     enemyContainer.parent = this;
+    ShootyEnemyContainer SECont;
+    SECont.parent = this;
     Timer time;
     SDL_Event event;
     const int DELTA_TIME = 16.66666;
@@ -31,6 +35,7 @@ void Gameworld::startWorld()
     square1.Init(30, 30, 50, 50);
     bulletContainer.Init(6);
     enemyContainer.Init();
+    SECont.Init();
 
 
  
@@ -38,6 +43,10 @@ void Gameworld::startWorld()
     {
         //input
         time.resetTicksTimer();
+        if (SECont.bulletContainer != nullptr)
+        {
+            SECont.bulletContainer->Init(2);
+        }
         while (SDL_PollEvent(&event))
         {
             SDL_Keycode keyPressed = event.key.keysym.sym;
@@ -96,16 +105,29 @@ void Gameworld::startWorld()
         square1.Update();
         bulletContainer.Update();
         enemyContainer.Update();
+        SECont.Update();
+        if (SECont.bulletContainer != nullptr) 
+        {
+            SECont.bulletContainer->Update();
+        }
         //Render
         square1.Render(renderer);
         bulletContainer.Render(renderer);
         enemyContainer.Render(renderer);
+        SECont.Render(renderer);
+        if (SECont.bulletContainer != nullptr) 
+        {
+            SECont.bulletContainer->Render(renderer);
+        }
         SDL_RenderPresent(renderer);
+
+        SDL_Log("Frame ran in %i ms", time.getTicks());
 
         if (time.getTicks() < DELTA_TIME)
         {
             SDL_Delay(DELTA_TIME - time.getTicks());
         }
+
     }
  }
 

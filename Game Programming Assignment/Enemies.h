@@ -11,22 +11,24 @@ class Enemies
 {
 public:
 	Enemies();
-	~Enemies();
+	virtual ~Enemies();
 
-	void Init(int px, int py);
-	void Update(int screenX, int screenY);
+	virtual void Init(int px, int py);
+	virtual void Update(int screenX, int screenY);
 	void Render(SDL_Renderer* renderer);
 	bool collidedWithBullet(Bullet* aBullet);
 	bool Destroyed();
 	SDL_Rect rect;
 	int R, G, B, w, h;
 
+
+
 	EnemiesContainer* parent;
 
-private:
+protected:
 	SDL_Event event;
 	Vector velocity;
-	int speed;
-	bool moveUp;
+	int ySpeed;
+
 };
 #endif

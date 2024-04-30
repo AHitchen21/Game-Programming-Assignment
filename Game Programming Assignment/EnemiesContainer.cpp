@@ -3,7 +3,9 @@
 
 EnemiesContainer::EnemiesContainer()
 {
-	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Enemies Container constructed with Param(%p)", this);
+	char timestring[32];
+	parent->getTime(timestring, 32);
+	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "[%s]Enemies Container created with Param(%p)", timestring, this);
 }
 
 EnemiesContainer::~EnemiesContainer()
@@ -12,7 +14,9 @@ EnemiesContainer::~EnemiesContainer()
 	{
 		delete item;
 	}
-	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Enemies Container destroyed with Param(%p)", this);
+	char timestring[32];
+	parent->getTime(timestring, 32);
+	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "[%s]Enemies Container destroyed with Param(%p)", timestring, this);
 }
 
 void EnemiesContainer::Add()
