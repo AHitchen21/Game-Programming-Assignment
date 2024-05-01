@@ -17,6 +17,8 @@ public:
     bool getTime(char* buffer, int  buffersize);
     void startWorld();
 
+    bool fs;
+
     int W = 800;
     int H = 600;
     SDL_Window* window;

@@ -15,16 +15,25 @@ public:
 	AH_Square();
 	~AH_Square();
 
-	void Init(int px, int py, int pw, int ph);
+	void Init(int px, int py, int pw, int ph, SDL_Renderer* aRenderer);
 	void Update();
 	void Input(int whichKey);
 	void Render(SDL_Renderer* renderer);
 	bool collidedWithBullet(EnemyBullet* aBullet);
 	bool collidedWithEnemy(Enemies* anEnemy);
 	SDL_Rect rect;
-	int R, G, B, w, h, health, frames;
+	SDL_Rect renderRect;
+	SDL_Rect posRect;
+	int R, G, B, w, h, health, frames, rendFrames;
+
+	SDL_Texture* textureIdle;
+	SDL_Texture* textureWalk;
 
 	bool invulnerable;
+	bool up;
+	bool down;
+	bool left;
+	bool right;
 
 	Gameworld* parent;
 

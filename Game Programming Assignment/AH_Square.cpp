@@ -1,6 +1,7 @@
 #include "AH_Square.h"
 #include "BulletContainer.h"
 #include "Gameworld.h"
+#include "SDL_image.h"
 #include "SDL.h"
 #include <vector>
 
@@ -18,7 +19,7 @@ AH_Square::~AH_Square()
 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Square destroyed with Param(%p)", this);
 }
 
-void AH_Square::Init(int px, int py, int pw, int ph)
+void AH_Square::Init(int px, int py, int pw, int ph, SDL_Renderer* aRenderer)
 {
 	rect.x = px;
 	rect.y = py;
@@ -28,7 +29,30 @@ void AH_Square::Init(int px, int py, int pw, int ph)
 	G = 0;
 	B = 0;
 
+    posRect.x = px;
+    posRect.y = py;
+    posRect.w = pw * 2;
+    posRect.h = ph * 2;
+
+    renderRect.x = 16;
+    renderRect.y = 144;
+    renderRect.w = 32;
+    renderRect.h = 32;
+
+    SDL_Surface* surfaceIdle = IMG_Load("content/Root_Idle.png");
+    textureIdle = SDL_CreateTextureFromSurface(aRenderer, surfaceIdle);
+    SDL_FreeSurface(surfaceIdle);
+
+    SDL_Surface* surfaceWalk = IMG_Load("content/Root_Walk.png");
+    textureWalk = SDL_CreateTextureFromSurface(aRenderer, surfaceWalk);
+    SDL_FreeSurface(surfaceIdle);
+
     invulnerable = false;
+
+    up = false;
+    down = false;
+    right = false;
+    left = false;
 
     health = 100;
     frames = 0;
@@ -99,40 +123,43 @@ void AH_Square::Update()
     {
         frames++;
     }
-    if (frames == 30)
+    if (frames == 60)
     {
         invulnerable = false;
         frames = 0;
     }
     char timestring[32];
     parent->getTime(timestring, 32);
-    if (parent->SECont.bulletContainer != nullptr) 
+    if (!invulnerable) 
     {
-        for (auto& item : parent->SECont.bulletContainer->bulletList)
+        if (parent->SECont.bulletContainer != nullptr)
         {
-            if (collidedWithBullet(item) && item->shot && !invulnerable)
+            for (auto& item : parent->SECont.bulletContainer->bulletList)
             {
-                health -= 20;
-                invulnerable = true;
-                SDL_Log("Health: %i", health);
-                if (health == 0)
+                if (collidedWithBullet(item) && item->shot)
                 {
-                    R = 0;
-                    B = 255;
+                    health -= 20;
+                    invulnerable = true;
+                    SDL_Log("Health: %i", health);
+                    if (health == 0)
+                    {
+                        R = 0;
+                        B = 255;
+                    }
                 }
             }
-        }
-        for (auto& item : parent->SECont.enemyList)
-        {
-            if (collidedWithEnemy(item) && !invulnerable)
+            for (auto& item : parent->SECont.enemyList)
             {
-                health -= 20;
-                invulnerable = true;
-                SDL_Log("Health: %i", health);
-                if (health == 0)
+                if (collidedWithEnemy(item) && !invulnerable)
                 {
-                    R = 0;
-                    B = 255;
+                    health -= 20;
+                    invulnerable = true;
+                    SDL_Log("Health: %i", health);
+                    if (health == 0)
+                    {
+                        R = 0;
+                        B = 255;
+                    }
                 }
             }
         }
@@ -202,6 +229,8 @@ void AH_Square::Update()
     }
     rect.x = rect.x + velocity.X;
     rect.y = rect.y + velocity.Y;
+    posRect.x = rect.x - 32;
+    posRect.y = rect.y - 64;
     if (velocity.X > 0) 
     {
         velocity.X = velocity.X - 1;
@@ -222,9 +251,61 @@ void AH_Square::Update()
 
 void AH_Square::Render(SDL_Renderer* renderer)
 {
+    rendFrames++;
+    if (right)
+    {
+        renderRect.y = 144;
+    }
+    else if (left)
+    {
+        renderRect.y = 144;
+    }
+    else if (up)
+    {
+        renderRect.y = 16;
+    }
+    else if (down)
+    {
+        renderRect.y = 208;
+    }
+    if (rendFrames < 20)
+    {
+        renderRect.x = 16;
+    }
+    else if (rendFrames >= 20 && rendFrames < 40)
+    {
+        renderRect.x = 80;
+    }
+    else if (rendFrames >= 40 && rendFrames < 60)
+    {
+        renderRect.x = 144;
+    }
+    else if (rendFrames >= 60 && rendFrames < 80)
+    {
+        renderRect.x = 208;
+    }
+    else 
+    {
+        rendFrames = 0;
+    }
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderClear(renderer);
     SDL_SetRenderDrawColor(renderer, R, G, B, 255);
+    if (invulnerable && frames % 10 == 0)
+    {
+        //do nothing
+    }
+    else 
+    {
+        if (left || right || up || down)
+        {
+            SDL_RenderCopy(renderer, textureWalk, &renderRect, &posRect);
+        }
+        else
+        {
+            SDL_RenderCopy(renderer, textureIdle, &renderRect, &posRect);
+        }
+    }
     SDL_RenderDrawRect(renderer, &rect);
 }
 

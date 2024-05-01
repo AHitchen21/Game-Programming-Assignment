@@ -12,13 +12,15 @@ Enemies::~Enemies()
 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Enemy destroyed with Param(%p)", this);
 }
 
-void Enemies::Init(int pX, int pY)
+void Enemies::Init(int pX, int pY, SDL_Renderer* renderer)
 {
 	rect.x = pX + 50;
 	rect.y = pY;
 	rect.w = 50;
 	rect.h = 50;
 	
+
+
 	w = 0;
 	h = 0;
 

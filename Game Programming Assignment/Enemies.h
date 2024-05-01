@@ -13,7 +13,7 @@ public:
 	Enemies();
 	virtual ~Enemies();
 
-	virtual void Init(int px, int py);
+	virtual void Init(int px, int py, SDL_Renderer* renderer);
 	virtual void Update(int screenX, int screenY);
 	void Render(SDL_Renderer* renderer);
 	bool collidedWithBullet(Bullet* aBullet);

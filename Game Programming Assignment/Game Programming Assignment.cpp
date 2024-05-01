@@ -6,6 +6,7 @@
 #include <vector>
 #include "SDL.h"
 #include "Timer.h"
+#include "SDL_image.h"
 #include "AH_Square.h"
 #include "Gameworld.h"
 
@@ -13,6 +14,11 @@
 int main(int argc, char* argv[])
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
+    {
+        return 1;
+    }
+
+    if (IMG_Init(SDL_INIT_EVERYTHING) < 0)
     {
         return 1;
     }
