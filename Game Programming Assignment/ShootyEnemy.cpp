@@ -21,4 +21,6 @@ void ShootyEnemy::Update(int screenX, int screenY)
 	velocity.Y = 0;
 	rect.x = rect.x + velocity.X;
 	rect.y = rect.y + velocity.Y;
+	posRect.x = rect.x - 16;
+	posRect.y = rect.y - 32;
 }

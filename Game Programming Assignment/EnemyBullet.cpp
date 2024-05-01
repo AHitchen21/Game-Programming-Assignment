@@ -30,7 +30,7 @@ void EnemyBullet::Init(int eX, int eY, SDL_Renderer* renderer)
 
 	bulletTexture = IMG_LoadTexture(renderer, "content/Fish 0031.png");
 
-	velocity.X = -15;
+	velocity.X = -10;
 	velocity.Y = 0;
 
 	frames = 0;
