@@ -8,19 +8,22 @@
 #include "Timer.h"
 #include "AH_Square.h"
 #include "BulletContainer.h"
+#include "ShootyEnemyContainer.h"
+#include "EnemiesContainer.h"
 
 class Gameworld
 {
 public:
     bool getTime(char* buffer, int  buffersize);
     void startWorld();
+
     int W = 800;
     int H = 600;
     SDL_Window* window;
     SDL_Renderer* renderer;
     BulletContainer bulletContainer;
-private:
-    
+    ShootyEnemyContainer SECont;
+    EnemiesContainer enemyContainer;
 };
 
 #endif

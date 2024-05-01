@@ -18,9 +18,7 @@ void Gameworld::startWorld()
     AH_Square square1;
     square1.parent = this;
     bulletContainer.parent = &square1;
-    EnemiesContainer enemyContainer;
     enemyContainer.parent = this;
-    ShootyEnemyContainer SECont;
     SECont.parent = this;
     Timer time;
     SDL_Event event;
@@ -117,7 +115,7 @@ void Gameworld::startWorld()
         }
         SDL_RenderPresent(renderer);
 
-        SDL_Log("Frame ran in %i ms", time.getTicks());
+       // SDL_Log("Frame ran in %i ms", time.getTicks());
 
         if (time.getTicks() < DELTA_TIME)
         {

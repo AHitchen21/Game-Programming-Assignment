@@ -18,7 +18,7 @@ void ShootyEnemyContainer::Add()
 	anEnemy->parent = this;
 	bulletContainer = new EBulletContainer();
 	bulletContainer->parent = anEnemy;
-	bulletContainer->Init(2);
+	bulletContainer->Init(1);
 	bulletCont = &(parent->bulletContainer);
 	int offset = h - 120;
 	int randomY = 70 + (rand() % offset);
