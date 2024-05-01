@@ -12,8 +12,8 @@ class BulletContainer
 public:
 	BulletContainer();
 	~BulletContainer();
-	void Init(int eNum);
-	void Add();
+	void Init(int eNum, SDL_Renderer* renderer);
+	void Add(SDL_Renderer* renderer);
 	void Input();
 	void Render(SDL_Renderer* aRenderer);
 	void Update();

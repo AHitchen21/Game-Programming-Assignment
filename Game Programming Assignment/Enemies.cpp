@@ -16,14 +16,25 @@ void Enemies::Init(int pX, int pY, SDL_Renderer* renderer)
 {
 	rect.x = pX + 50;
 	rect.y = pY;
-	rect.w = 50;
-	rect.h = 50;
+	rect.w = 64;
+	rect.h = 64;
 	
+	posRect.x = pX;
+	posRect.y = pY;
+	posRect.w = 50 * 2;
+	posRect.h = 50 * 2;
 
+	renderRect.x = 0;
+	renderRect.y = 32;
+	renderRect.w = 32;
+	renderRect.h = 32;
 
 	w = 0;
 	h = 0;
 
+	renderFrames = 0;
+
+	walkSprite = IMG_LoadTexture(renderer, "content/WhiteCat.png");
 
 	R = 0;
 	G = 0;
@@ -59,6 +70,8 @@ void Enemies::Update(int screenX, int screenY)
 	}
 	rect.x = rect.x + velocity.X;
 	rect.y = rect.y + velocity.Y;
+	posRect.x = rect.x - 16;
+	posRect.y = rect.y - 32;
 }
 
 bool Enemies::Destroyed()
@@ -107,6 +120,20 @@ bool Enemies::collidedWithBullet(Bullet* aBullet)
 
 void Enemies::Render(SDL_Renderer* aRenderer)
 {
+	renderFrames++;
+	if (renderFrames < 15)
+	{
+		renderRect.x = 0;
+	}
+	else if (renderFrames >= 15 && renderFrames < 30)
+	{
+		renderRect.x = 32;
+	}
+	else 
+	{
+		renderFrames = 0;
+	}
 	SDL_SetRenderDrawColor(aRenderer, R, G, B, 255);
+	SDL_RenderCopy(aRenderer, walkSprite, &renderRect, &posRect);
 	SDL_RenderDrawRect(aRenderer, &rect);
 }

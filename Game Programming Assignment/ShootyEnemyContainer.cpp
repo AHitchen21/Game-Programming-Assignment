@@ -12,28 +12,29 @@ ShootyEnemyContainer::~ShootyEnemyContainer()
 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Shooty Enemy Container destroyed with Param(%p)", this);
 }
 
-void ShootyEnemyContainer::Add()
+void ShootyEnemyContainer::Add(SDL_Renderer* renderer)
 {
 	ShootyEnemy* anEnemy = new ShootyEnemy();
 	anEnemy->parent = this;
 	bulletContainer = new EBulletContainer();
 	bulletContainer->parent = anEnemy;
-	bulletContainer->Init(1);
+	bulletContainer->Init(1, renderer);
 	bulletCont = &(parent->bulletContainer);
+	anEnemy->child = bulletContainer;
 	int offset = h - 120;
 	int randomY = 70 + (rand() % offset);
 	printf("randomY: %i", randomY);
-	anEnemy->Init(w, randomY);
+	anEnemy->Init(w, randomY, renderer);
 	this->enemyList.push_back(anEnemy);
 }
 
-void ShootyEnemyContainer::Update()
+void ShootyEnemyContainer::Update(SDL_Renderer* renderer)
 {
 	SDL_GetWindowSize(parent->window, &w, &h);
 	frames++;
 	if (frames == 180)
 	{
-		Add();
+		Add(renderer);
 		frames = 0;
 	}
 
@@ -45,6 +46,7 @@ void ShootyEnemyContainer::Update()
 		shootyEnemy->Update(w, h);
 		if (shootyEnemy->Destroyed())
 		{
+			delete shootyEnemy->child;
 			delete shootyEnemy;
 			it = enemyList.erase(it);
 

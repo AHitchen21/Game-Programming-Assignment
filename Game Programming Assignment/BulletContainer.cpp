@@ -6,13 +6,13 @@ BulletContainer::BulletContainer()
 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Bullet Container constructed with Param(%p)", this);
 }
 
-void BulletContainer::Init(int eNum)
+void BulletContainer::Init(int eNum, SDL_Renderer* renderer)
 {
 	Num = eNum;
 
 	for (int i = 0; i < Num; i++)
 	{
-		Add();
+		Add(renderer);
 	}
 }
 
@@ -25,11 +25,11 @@ BulletContainer::~BulletContainer()
 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Bullet Container destroyed with Param(%p)", this);
 }
 
-void BulletContainer::Add()
+void BulletContainer::Add(SDL_Renderer* renderer)
 {
 	Bullet* aBullet = new Bullet();
 	aBullet->parent = this;
-	aBullet->Init(parent->rect.x, parent->rect.y - 25);
+	aBullet->Init(parent->rect.x, parent->rect.y - 25, renderer);
 	this->bulletList.push_back(aBullet);
 }
 

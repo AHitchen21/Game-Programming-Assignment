@@ -14,9 +14,9 @@ public:
 	EnemiesContainer();
 	virtual ~EnemiesContainer();
 	void Init();
-	virtual void Add();
+	virtual void Add(SDL_Renderer* renderer);
 	void Render(SDL_Renderer* aRenderer);
-	virtual void Update();
+	virtual void Update(SDL_Renderer* renderer);
 
 	std::vector<Enemies*> enemyList;
 	int Num, w, h, frames;

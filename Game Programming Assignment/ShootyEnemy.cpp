@@ -1,5 +1,6 @@
 #include "ShootyEnemy.h"
 #include "EnemiesContainer.h"
+#include "EBulletContainer.h"
 
 ShootyEnemy::ShootyEnemy() : Enemies()
 {

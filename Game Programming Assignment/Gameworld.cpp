@@ -32,7 +32,7 @@ void Gameworld::startWorld()
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     square1.Init(30, 30, 64, 64, renderer);
-    bulletContainer.Init(6);
+    bulletContainer.Init(6, renderer);
     enemyContainer.Init();
     SECont.Init();
 
@@ -112,6 +112,7 @@ void Gameworld::startWorld()
             if (event.type == SDL_QUIT)
             {
                 quit = true;
+                IMG_Quit;
                 SDL_Quit;
             }
         }
@@ -119,8 +120,8 @@ void Gameworld::startWorld()
         //update
         square1.Update();
         bulletContainer.Update();
-        enemyContainer.Update();
-        SECont.Update();
+        enemyContainer.Update(renderer);
+        SECont.Update(renderer);
         if (SECont.bulletContainer != nullptr) 
         {
             SECont.bulletContainer->Update();

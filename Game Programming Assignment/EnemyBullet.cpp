@@ -11,12 +11,24 @@ EnemyBullet::~EnemyBullet()
 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Enemy Bullet destroyed with Param(%p)", this);
 }
 
-void EnemyBullet::Init(int eX, int eY)
+void EnemyBullet::Init(int eX, int eY, SDL_Renderer* renderer)
 {
 	bulletRect.x = eX;
 	bulletRect.y = eY;
-	bulletRect.w = 30;
-	bulletRect.h = 10;
+	bulletRect.w = 32;
+	bulletRect.h = 32;
+
+	renderRect.x = 0;
+	renderRect.y = 0;
+	renderRect.w = 32;
+	renderRect.h = 32;
+
+	posRect.x = eX;
+	posRect.y = eY;
+	posRect.w = 32;
+	posRect.h = 32;
+
+	bulletTexture = IMG_LoadTexture(renderer, "content/Fish 0031.png");
 
 	velocity.X = -15;
 	velocity.Y = 0;
@@ -45,12 +57,15 @@ void EnemyBullet::Update(int posX, int posY, int screenX, int screenY)
 		else
 		{
 			bulletRect.x = velocity.X + bulletRect.x;
+			posRect.x = bulletRect.x;
 		}
 	}
 	else
 	{
 		bulletRect.x = posX;
 		bulletRect.y = posY + 15;
+		posRect.x = bulletRect.x;
+		posRect.y = bulletRect.y;
 	}
 }
 
@@ -59,6 +74,7 @@ void EnemyBullet::Render(SDL_Renderer* aRenderer)
 	if (shot == true)
 	{
 		SDL_SetRenderDrawColor(aRenderer, 0, 255, 0, 0);
+		SDL_RenderCopy(aRenderer, bulletTexture, &renderRect, &posRect);
 		SDL_RenderDrawRect(aRenderer, &bulletRect);
 	}
 }

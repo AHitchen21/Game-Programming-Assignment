@@ -19,7 +19,7 @@ EnemiesContainer::~EnemiesContainer()
 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "[%s]Enemies Container destroyed with Param(%p)", timestring, this);
 }
 
-void EnemiesContainer::Add()
+void EnemiesContainer::Add(SDL_Renderer* renderer)
 {
 	Enemies* anEnemy = new Enemies();
 	anEnemy->parent = this;
@@ -27,7 +27,7 @@ void EnemiesContainer::Add()
 	int offset = h - 70;
 	int randomY = 70 + (rand() % offset);
 	printf("randomY: %i", randomY);
-	anEnemy->Init(w, randomY);
+	anEnemy->Init(w, randomY, renderer);
 	this->enemyList.push_back(anEnemy);
 }
 
@@ -36,13 +36,13 @@ void EnemiesContainer::Init()
 	frames = 0;
 }
 
-void EnemiesContainer::Update()
+void EnemiesContainer::Update(SDL_Renderer* renderer)
 {
 	SDL_GetWindowSize(parent->window, &w, &h);
 	frames++;
 	if (frames == 60)
 	{
-		Add();
+		Add(renderer);
 		frames = 0;
 	}
 
