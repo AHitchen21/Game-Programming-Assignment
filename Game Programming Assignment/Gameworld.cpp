@@ -15,6 +15,9 @@ bool Gameworld::getTime(char* buffer, int  buffersize)
 
 void Gameworld::startWorld()
 {
+    bg = { 0 , 0, 1024, 768 };
+    renderRect = { 0 , 0, 3000, 1500 };
+
     AH_Square square1;
     square1.parent = this;
     bulletContainer.parent = &square1;
@@ -31,6 +34,8 @@ void Gameworld::startWorld()
     window = SDL_CreateWindow("Alexander Hitchen, 26988001", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 768, SDL_WINDOW_RESIZABLE);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
+    background = IMG_LoadTexture(renderer, "content/2589522.png");
+    
     square1.Init(30, 30, 64, 64, renderer);
     bulletContainer.Init(6, renderer);
     enemyContainer.Init();
@@ -127,6 +132,7 @@ void Gameworld::startWorld()
             SECont.bulletContainer->Update();
         }
         //Render
+        SDL_RenderCopy(renderer, background, &renderRect, &bg);
         square1.Render(renderer);
         bulletContainer.Render(renderer);
         enemyContainer.Render(renderer);

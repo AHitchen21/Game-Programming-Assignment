@@ -135,5 +135,4 @@ void Enemies::Render(SDL_Renderer* aRenderer)
 	}
 	SDL_SetRenderDrawColor(aRenderer, R, G, B, 255);
 	SDL_RenderCopy(aRenderer, walkSprite, &renderRect, &posRect);
-	SDL_RenderDrawRect(aRenderer, &rect);
 }

@@ -6,6 +6,7 @@
 #include <vector>
 #include "SDL.h"
 #include "Timer.h"
+#include "SDL_image.h"
 #include "AH_Square.h"
 #include "BulletContainer.h"
 #include "ShootyEnemyContainer.h"
@@ -18,6 +19,11 @@ public:
     void startWorld();
 
     bool fs;
+
+    SDL_Rect bg;
+    SDL_Rect renderRect;
+
+    SDL_Texture* background;
 
     int W = 800;
     int H = 600;

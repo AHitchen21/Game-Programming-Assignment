@@ -82,6 +82,5 @@ void Bullet::Render(SDL_Renderer* aRenderer)
 	{
 		SDL_SetRenderDrawColor(aRenderer, 0, 255, 0, 0);
 		SDL_RenderCopy(aRenderer, bulletSprite, &renderRect, &posRect);
-		SDL_RenderDrawRect(aRenderer, &bulletRect);
 	}
 }

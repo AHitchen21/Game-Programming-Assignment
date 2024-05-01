@@ -288,8 +288,6 @@ void AH_Square::Render(SDL_Renderer* renderer)
     {
         rendFrames = 0;
     }
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    SDL_RenderClear(renderer);
     SDL_SetRenderDrawColor(renderer, R, G, B, 255);
     if (invulnerable && frames % 10 == 0)
     {
@@ -306,6 +304,5 @@ void AH_Square::Render(SDL_Renderer* renderer)
             SDL_RenderCopy(renderer, textureIdle, &renderRect, &posRect);
         }
     }
-    SDL_RenderDrawRect(renderer, &rect);
 }
 
