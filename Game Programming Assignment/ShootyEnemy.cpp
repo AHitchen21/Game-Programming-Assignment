@@ -10,6 +10,7 @@ ShootyEnemy::ShootyEnemy() : Enemies()
 ShootyEnemy::~ShootyEnemy()
 {
 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Shooty Enemy destroyed with Param(%p)", this);
+	SDL_DestroyTexture(walkSprite);
 }
 
 

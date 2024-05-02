@@ -3,6 +3,7 @@
 #include "Enemies.h"
 #include "ShootyEnemyContainer.h"
 #include "EBulletContainer.h"
+#include "SDL_ttf.h"
 
 bool Gameworld::getTime(char* buffer, int  buffersize)
 {
@@ -117,6 +118,8 @@ void Gameworld::startWorld()
             if (event.type == SDL_QUIT)
             {
                 quit = true;
+                SDL_DestroyTexture(background);
+                TTF_Quit;
                 IMG_Quit;
                 SDL_Quit;
             }
@@ -132,6 +135,8 @@ void Gameworld::startWorld()
             SECont.bulletContainer->Update();
         }
         //Render
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
+        SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, background, &renderRect, &bg);
         square1.Render(renderer);
         bulletContainer.Render(renderer);

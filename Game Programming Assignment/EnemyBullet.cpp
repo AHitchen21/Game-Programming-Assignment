@@ -9,6 +9,7 @@ EnemyBullet::EnemyBullet()
 EnemyBullet::~EnemyBullet()
 {
 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Enemy Bullet destroyed with Param(%p)", this);
+	SDL_DestroyTexture(bulletTexture);
 }
 
 void EnemyBullet::Init(int eX, int eY, SDL_Renderer* renderer)

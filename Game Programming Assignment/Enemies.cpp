@@ -10,6 +10,7 @@ Enemies::Enemies()
 Enemies::~Enemies()
 {
 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Enemy destroyed with Param(%p)", this);
+	SDL_DestroyTexture(walkSprite);
 }
 
 void Enemies::Init(int pX, int pY, SDL_Renderer* renderer)

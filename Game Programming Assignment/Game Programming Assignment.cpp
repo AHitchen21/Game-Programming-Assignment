@@ -9,6 +9,7 @@
 #include "SDL_image.h"
 #include "AH_Square.h"
 #include "Gameworld.h"
+#include "SDL_ttf.h"
 
 
 int main(int argc, char* argv[])
@@ -19,6 +20,11 @@ int main(int argc, char* argv[])
     }
 
     if (IMG_Init(SDL_INIT_EVERYTHING) < 0)
+    {
+        return 1;
+    }
+
+    if (TTF_Init() < 0)
     {
         return 1;
     }

@@ -4,7 +4,9 @@
 
 #include "SDL.h"
 #include "SDL_image.h"
+#include "SDL_ttf.h"
 #include "Vector.h"
+#include <iostream>
 
 class BulletContainer;
 
@@ -21,11 +23,18 @@ public:
 	SDL_Rect renderRect;
 	SDL_Rect bulletRect;
 
+	std::string string;
+
+	int score;
+
 	bool shot;
 	bool input;
 	bool hit;
 
+	TTF_Font* font;
+
 	SDL_Texture* bulletSprite;
+	SDL_Texture* text;
 
 	BulletContainer* parent;
 
