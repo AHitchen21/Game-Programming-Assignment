@@ -114,7 +114,10 @@ bool Enemies::collidedWithBullet(Bullet* aBullet)
 	}
 	else
 	{
-		aBullet->hit = true;
+		if (aBullet->shot) 
+		{
+			aBullet->hit = true;
+		}
 		return true;
 	}
 }

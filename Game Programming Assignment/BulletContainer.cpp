@@ -9,6 +9,14 @@ BulletContainer::BulletContainer()
 void BulletContainer::Init(int eNum, SDL_Renderer* renderer)
 {
 	Num = eNum;
+	multiplier = 1;
+	hitCount = 0;
+
+	string = "Score: " + std::to_string(score) + " x" + std::to_string(multiplier);
+	const char* newString = string.c_str();
+	reset = false;
+
+	font = TTF_OpenFont("content/arial.ttf", 25);
 
 	for (int i = 0; i < Num; i++)
 	{
@@ -18,6 +26,8 @@ void BulletContainer::Init(int eNum, SDL_Renderer* renderer)
 
 BulletContainer::~BulletContainer()
 {
+	SDL_DestroyTexture(text);
+	TTF_CloseFont(font);
 	for (auto& item : bulletList)
 	{
 		delete item;
@@ -50,12 +60,42 @@ void BulletContainer::Update()
 {
 	for (auto& item : bulletList)
 	{
+		if (item->hit)
+		{
+			score += 100 * multiplier;
+			hitCount++;
+			if (hitCount % 5 == 0)
+			{
+				multiplier++;
+			}
+		}
+		if (parent->invulnerable && !reset)
+		{
+			multiplier = 1;
+			reset = true;
+		}
+		else if (!parent->invulnerable && reset)
+		{
+			reset = false;
+		}
 		item->Update(parent->rect.x, parent->rect.y, parent->w, parent->h);
 	}
 }
 
 void BulletContainer::Render(SDL_Renderer* aRenderer)
 {
+	int textW = 0;
+	int textH = 0;
+	SDL_Color colour = { 255, 255, 255 };
+	string = "Score: " + std::to_string(score) + " x" + std::to_string(multiplier);
+	const char* newString = string.c_str();
+	SDL_Surface* surface = TTF_RenderText_Solid(font, newString, colour);
+	SDL_DestroyTexture(text);
+	text = SDL_CreateTextureFromSurface(aRenderer, surface);
+	SDL_FreeSurface(surface);
+	SDL_QueryTexture(text, NULL, NULL, &textW, &textH);
+	SDL_Rect textPosRect = { 0 , 0, textW, textH };
+	SDL_RenderCopy(aRenderer, text, NULL, &textPosRect);
 	for (auto& item : bulletList)
 	{
 		item->Render(aRenderer);

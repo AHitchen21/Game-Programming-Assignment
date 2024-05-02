@@ -289,7 +289,7 @@ void AH_Square::Render(SDL_Renderer* renderer)
         rendFrames = 0;
     }
     SDL_SetRenderDrawColor(renderer, R, G, B, 255);
-    if (invulnerable && frames % 10 == 0)
+    if (invulnerable && rendFrames % 10 == 0)
     {
         //do nothing
     }
