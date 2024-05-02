@@ -19,7 +19,7 @@ public:
 	virtual void Update(SDL_Renderer* renderer);
 
 	std::vector<Enemies*> enemyList;
-	int Num, w, h, frames;
+	int Num, w, h, frames, spawnTimer;
 
 	BulletContainer* bulletCont;
 

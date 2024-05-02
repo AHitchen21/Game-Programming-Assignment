@@ -34,13 +34,14 @@ void EnemiesContainer::Add(SDL_Renderer* renderer)
 void EnemiesContainer::Init()
 {
 	frames = 0;
+	spawnTimer = 60;
 }
 
 void EnemiesContainer::Update(SDL_Renderer* renderer)
 {
 	SDL_GetWindowSize(parent->window, &w, &h);
 	frames++;
-	if (frames == 60)
+	if (frames >= spawnTimer)
 	{
 		Add(renderer);
 		frames = 0;
@@ -71,3 +72,4 @@ void EnemiesContainer::Render(SDL_Renderer* renderer)
 		item->Render(renderer);
 	}
 }
+

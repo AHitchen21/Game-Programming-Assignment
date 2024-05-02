@@ -18,6 +18,12 @@ void Gameworld::startWorld()
 {
     bg = { 0 , 0, 1024, 768 };
     renderRect = { 0 , 0, 3000, 1500 };
+    timer = 5;
+
+    string = "Timer: " + std::to_string(timer) + "s";
+    const char* newString = string.c_str();
+
+    lastTime, currentTime = 0;
 
     AH_Square square1;
     square1.parent = this;
@@ -30,6 +36,7 @@ void Gameworld::startWorld()
     bool quit = false;
     bool left = true;
     bool move = true;
+    beginOnslaught = false;
     fs = false;
 
     window = SDL_CreateWindow("Alexander Hitchen, 26988001", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 768, SDL_WINDOW_RESIZABLE);
@@ -146,7 +153,61 @@ void Gameworld::startWorld()
         {
             SECont.bulletContainer->Render(renderer);
         }
+        int textW = 0;
+        int textH = 0;
+        SDL_Color colour = { 255, 255, 255 };
+        string = "Timer: " + std::to_string(timer) + "s";
+        const char* newString = string.c_str();
+        SDL_Surface* surface1 = TTF_RenderText_Solid(bulletContainer.font, newString, colour);
+        SDL_DestroyTexture(texture);
+        texture = SDL_CreateTextureFromSurface(renderer, surface1);
+        SDL_FreeSurface(surface1);
+        SDL_QueryTexture(texture, NULL, NULL, &textW, &textH);
+        SDL_Rect textPosRect = { 430 , 0, textW, textH };
+        SDL_RenderCopy(renderer, texture, NULL, &textPosRect);
         SDL_RenderPresent(renderer);
+
+        currentTime = SDL_GetTicks();
+        if (currentTime > lastTime + 1000)
+        {
+            //change timer
+            timer--;
+            lastTime = currentTime;
+        }
+        if (timer == 0 && bulletContainer.score >= 150000 && beginOnslaught == false)
+        {
+            beginOnslaught = true;
+            timer = 15;
+            enemyContainer.spawnTimer = 10;
+            //onslaught
+        }
+
+        if (timer == 0 && bulletContainer.score < 150000 || beginOnslaught == true)
+        {
+            string = "GAME OVER!!!";
+            std::string string2 = "Your score: " + std::to_string(bulletContainer.score);
+            const char* newString = string.c_str();
+            const char* newString2 = string2.c_str();
+            SDL_Surface* surface1 = TTF_RenderText_Solid(bulletContainer.font, newString, colour);
+            SDL_Surface* surface2 = TTF_RenderText_Solid(bulletContainer.font, newString2, colour);
+            SDL_DestroyTexture(texture);
+            texture = SDL_CreateTextureFromSurface(renderer, surface1);
+            SDL_FreeSurface(surface1);
+            SDL_QueryTexture(texture, NULL, NULL, &textW, &textH);
+            SDL_Rect textPosRect = { 430 , 230, textW, textH };
+            SDL_Rect textPosRect2 = { 430 , 350, textW, textH };
+            SDL_RenderCopy(renderer, texture, NULL, &textPosRect);
+            SDL_DestroyTexture(texture);
+            texture = SDL_CreateTextureFromSurface(renderer, surface2);
+            SDL_FreeSurface(surface2);
+            SDL_QueryTexture(texture, NULL, NULL, &textW, &textH);
+            SDL_RenderCopy(renderer, texture, NULL, &textPosRect2);
+            SDL_RenderPresent(renderer);
+            SDL_Delay(3000);
+            SDL_Event events;
+            events.type = SDL_QUIT;
+            SDL_PushEvent(&events);
+        }
 
         SDL_Log("Frame ran in %i ms", time.getTicks());
 
@@ -157,4 +218,5 @@ void Gameworld::startWorld()
 
     }
  }
+
 

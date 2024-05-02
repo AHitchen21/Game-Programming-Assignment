@@ -12,11 +12,11 @@ void BulletContainer::Init(int eNum, SDL_Renderer* renderer)
 	multiplier = 1;
 	hitCount = 0;
 
+	font = TTF_OpenFont("content/arial.ttf", 25);
+
 	string = "Score: " + std::to_string(score) + " x" + std::to_string(multiplier);
 	const char* newString = string.c_str();
 	reset = false;
-
-	font = TTF_OpenFont("content/arial.ttf", 25);
 
 	for (int i = 0; i < Num; i++)
 	{
