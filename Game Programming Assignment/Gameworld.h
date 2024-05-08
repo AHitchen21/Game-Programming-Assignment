@@ -8,6 +8,7 @@
 #include "Timer.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
+#include "SDL_mixer.h"
 #include "AH_Square.h"
 #include "BulletContainer.h"
 #include "ShootyEnemyContainer.h"
@@ -18,8 +19,8 @@ class Gameworld
 public:
     bool getTime(char* buffer, int  buffersize);
     void startWorld();
-    void onslaught();
 
+    Mix_Music* bgMusic = NULL;
     bool fs;
     bool beginOnslaught;
 

@@ -3,6 +3,7 @@
 #include "Enemies.h"
 #include "ShootyEnemyContainer.h"
 #include "EBulletContainer.h"
+#include "SDL_mixer.h"
 #include "SDL_ttf.h"
 
 bool Gameworld::getTime(char* buffer, int  buffersize)
@@ -18,12 +19,22 @@ void Gameworld::startWorld()
 {
     bg = { 0 , 0, 1024, 768 };
     renderRect = { 0 , 0, 3000, 1500 };
-    timer = 5;
+    timer = 60;
 
     string = "Timer: " + std::to_string(timer) + "s";
     const char* newString = string.c_str();
 
     lastTime, currentTime = 0;
+
+    if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == - 1)
+    {
+        SDL_LogMessage(SDL_LOG_CATEGORY_AUDIO, SDL_LOG_PRIORITY_CRITICAL, "No audio found!!");
+    }
+    else
+    {
+        bgMusic = Mix_LoadMUS("content/320232__foolboymedia__video-game-land.wav");
+        Mix_VolumeMusic(32);
+    }
 
     AH_Square square1;
     square1.parent = this;
@@ -39,7 +50,7 @@ void Gameworld::startWorld()
     beginOnslaught = false;
     fs = false;
 
-    window = SDL_CreateWindow("Alexander Hitchen, 26988001", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 768, SDL_WINDOW_RESIZABLE);
+    window = SDL_CreateWindow("Alexander Hitchen, 26988001 - Dog Vs Cats", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 768, SDL_WINDOW_RESIZABLE);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     background = IMG_LoadTexture(renderer, "content/2589522.png");
@@ -49,7 +60,58 @@ void Gameworld::startWorld()
     enemyContainer.Init();
     SECont.Init();
 
+    Mix_PlayMusic(bgMusic, -1);
 
+    SDL_Color colour = { 255, 255, 255 };
+    int textW = 0;
+    int textH = 0;
+    string = "WELCOME TO DOG vs CATS";
+    std::string string2 = "Controls: ";
+    std::string string3 = "- W,A,S,D: Move";
+    std::string string4 = "- Space: Shoot";
+    std::string string5 = "- F: Fullscreen";
+    newString = string.c_str();
+    const char* newString2 = string2.c_str();
+    const char* newString3 = string3.c_str();
+    const char* newString4 = string4.c_str();
+    const char* newString5 = string5.c_str();
+    SDL_Surface* surface1 = TTF_RenderText_Solid(bulletContainer.font, newString, colour);
+    SDL_Surface* surface2 = TTF_RenderText_Solid(bulletContainer.font, newString2, colour);
+    SDL_Surface* surface3 = TTF_RenderText_Solid(bulletContainer.font, newString3, colour);
+    SDL_Surface* surface4 = TTF_RenderText_Solid(bulletContainer.font, newString4, colour);
+    SDL_Surface* surface5 = TTF_RenderText_Solid(bulletContainer.font, newString5, colour);
+    SDL_DestroyTexture(texture);
+    texture = SDL_CreateTextureFromSurface(renderer, surface1);
+    SDL_FreeSurface(surface1);
+    SDL_QueryTexture(texture, NULL, NULL, &textW, &textH);
+    SDL_Rect textPosRect = { 430 , 230, textW, textH };
+    SDL_Rect textPosRect2 = { 430 , 350, textW, textH };
+    SDL_RenderCopy(renderer, texture, NULL, &textPosRect);
+    SDL_DestroyTexture(texture);
+    texture = SDL_CreateTextureFromSurface(renderer, surface2);
+    SDL_FreeSurface(surface2);
+    SDL_QueryTexture(texture, NULL, NULL, &textW, &textH);
+    SDL_RenderCopy(renderer, texture, NULL, &textPosRect2);
+    SDL_DestroyTexture(texture);
+    texture = SDL_CreateTextureFromSurface(renderer, surface3);
+    SDL_FreeSurface(surface3);
+    textPosRect2 = { 430 , 370, textW, textH };
+    SDL_QueryTexture(texture, NULL, NULL, &textW, &textH);
+    SDL_RenderCopy(renderer, texture, NULL, &textPosRect2);
+    SDL_DestroyTexture(texture);
+    texture = SDL_CreateTextureFromSurface(renderer, surface4);
+    SDL_FreeSurface(surface4);
+    textPosRect2 = { 430 , 390, textW, textH };
+    SDL_QueryTexture(texture, NULL, NULL, &textW, &textH);
+    SDL_RenderCopy(renderer, texture, NULL, &textPosRect2);
+    SDL_DestroyTexture(texture);
+    texture = SDL_CreateTextureFromSurface(renderer, surface5);
+    SDL_FreeSurface(surface5);
+    textPosRect2 = { 430 , 410, textW, textH };
+    SDL_QueryTexture(texture, NULL, NULL, &textW, &textH);
+    SDL_RenderCopy(renderer, texture, NULL, &textPosRect2);
+    SDL_RenderPresent(renderer);
+    SDL_Delay(5000);
  
     while (!quit)
     {
@@ -126,6 +188,8 @@ void Gameworld::startWorld()
             {
                 quit = true;
                 SDL_DestroyTexture(background);
+                Mix_FreeMusic(bgMusic);
+                Mix_CloseAudio();
                 TTF_Quit;
                 IMG_Quit;
                 SDL_Quit;
@@ -155,15 +219,28 @@ void Gameworld::startWorld()
         }
         int textW = 0;
         int textH = 0;
-        SDL_Color colour = { 255, 255, 255 };
+        colour = { 255, 255, 255 };
         string = "Timer: " + std::to_string(timer) + "s";
-        const char* newString = string.c_str();
-        SDL_Surface* surface1 = TTF_RenderText_Solid(bulletContainer.font, newString, colour);
+        newString = string.c_str();
+        surface1 = TTF_RenderText_Solid(bulletContainer.font, newString, colour);
         SDL_DestroyTexture(texture);
         texture = SDL_CreateTextureFromSurface(renderer, surface1);
         SDL_FreeSurface(surface1);
         SDL_QueryTexture(texture, NULL, NULL, &textW, &textH);
         SDL_Rect textPosRect = { 430 , 0, textW, textH };
+        SDL_RenderCopy(renderer, texture, NULL, &textPosRect);
+
+        textW = 0;
+        textH = 0;
+        colour = { 255, 255, 255 };
+        string = "Health: " + std::to_string(square1.health);
+        newString = string.c_str();
+        surface1 = TTF_RenderText_Solid(bulletContainer.font, newString, colour);
+        SDL_DestroyTexture(texture);
+        texture = SDL_CreateTextureFromSurface(renderer, surface1);
+        SDL_FreeSurface(surface1);
+        SDL_QueryTexture(texture, NULL, NULL, &textW, &textH);
+        textPosRect = { 800 , 0, textW, textH };
         SDL_RenderCopy(renderer, texture, NULL, &textPosRect);
         SDL_RenderPresent(renderer);
 
@@ -174,7 +251,7 @@ void Gameworld::startWorld()
             timer--;
             lastTime = currentTime;
         }
-        if (timer == 0 && bulletContainer.score >= 150000 && beginOnslaught == false)
+        if (timer == 0 && bulletContainer.score >= 15000 && beginOnslaught == false)
         {
             beginOnslaught = true;
             timer = 15;
@@ -182,12 +259,12 @@ void Gameworld::startWorld()
             //onslaught
         }
 
-        if (timer == 0 && bulletContainer.score < 150000 || beginOnslaught == true)
+        if (timer == 0 && bulletContainer.score < 15000 || beginOnslaught == true && timer == 0 || square1.health <= 0)
         {
             string = "GAME OVER!!!";
             std::string string2 = "Your score: " + std::to_string(bulletContainer.score);
-            const char* newString = string.c_str();
-            const char* newString2 = string2.c_str();
+            newString = string.c_str();
+            newString2 = string2.c_str();
             SDL_Surface* surface1 = TTF_RenderText_Solid(bulletContainer.font, newString, colour);
             SDL_Surface* surface2 = TTF_RenderText_Solid(bulletContainer.font, newString2, colour);
             SDL_DestroyTexture(texture);
