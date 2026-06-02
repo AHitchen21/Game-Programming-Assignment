@@ -1,6 +1,6 @@
 # Game Programming Assignment
 
-A C++ based project developed for a university module. The project focuses on game design, coding and understanding game logic. 
+A 2D shooter game developed from scratch in C++ using the SDL library. The project focused on building core engine systems and implementing a playable game demo, with only a minimal code framework provided. This involved developing gameplay functionality, rendering systems, input handling, and game logic while applying object-oriented programming principles.
 
 ## Technologies Used
 
