@@ -4,14 +4,14 @@ A C++ based project developed for a university module. The project focuses on ga
 
 ## Technologies Used
 
-C++
-SDL
+* C++
+* SDL
 
 ## My contributions
 
-Designing and implementing gameplay mechanics
-Adding sound and sprites
-Creating C++ classes to extend functionality
+* Designing and implementing gameplay mechanics
+* Adding sound and sprites
+* Creating C++ classes to extend functionality
 
 ## Running the Project
 
